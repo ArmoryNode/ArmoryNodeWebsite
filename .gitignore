@@ -2,3 +2,6 @@
 elm-stuff
 # elm-repl generated files
 repl-temp-*
+# generated css and js
+static/js/*.min.js
+static/css/*.min.css
