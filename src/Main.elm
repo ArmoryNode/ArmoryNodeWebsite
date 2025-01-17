@@ -1,38 +1,48 @@
-module Main exposing (main)
+port module Main exposing (main)
 
 import Browser
 import Html exposing (Html, a, div, i, main_, nav, span)
 import Html.Attributes exposing (attribute, class, href, id)
 import Html.Events exposing (onClick)
 
-
 main : Program () Model Msg
 main =
-    Browser.sandbox
+    Browser.element
         { init = initModel
-        , update = update
         , view = view
+        , update = update
+        , subscriptions = subscriptions
         }
 
 
-initModel : Model
-initModel =
-    { darkMode = False }
+port darkModeSettingReceived : (Bool -> msg) -> Sub msg 
+port setDarkModeStorage : Bool -> Cmd msg
+
+
+initModel : () -> (Model, Cmd Msg)
+initModel _ =
+    ( { darkMode = False }, Cmd.none )
 
 
 type Msg
     = ToggleDarkMode
+    | DarkModeSettingReceived Bool
 
 
 type alias Model =
     { darkMode : Bool }
 
 
-update : Msg -> Model -> Model
+update : Msg -> Model -> (Model, Cmd Msg)
 update msg model =
     case msg of
         ToggleDarkMode ->
-            { model | darkMode = not model.darkMode }
+            let
+                darkModeEnabled = not model.darkMode
+            in
+            ( { model | darkMode = darkModeEnabled }, setDarkModeStorage darkModeEnabled )
+        DarkModeSettingReceived darkMode ->
+            ( { model | darkMode = darkMode }, Cmd.none )
 
 
 navLink : String -> String -> String -> String -> Html msg
@@ -66,6 +76,11 @@ navItems =
         , navLink "bg-blue" "https://www.github.com/armorynode" "fa-brands fa-fw fa-square-github fa-2x" "GitHub"
         , navLink "bg-grey" "https://ko-fi.com/armorynode" "fa-solid fa-fw fa-cup-togo fa-2x" "Buy me a coffee"
         ]
+
+
+subscriptions : Model -> Sub Msg
+subscriptions _ =
+    darkModeSettingReceived DarkModeSettingReceived
 
 
 view : Model -> Html Msg
