@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>ArmoryNode</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="/css/main.min.css">
+        <link rel="stylesheet" href="https://kit.fontawesome.com/bada968d00.css" crossorigin="anonymous">
+        <script src="/js/main.min.js"></script>
+    </head>
+    <body>
+        <div id="app"></div>
+        <script>
+            var app = Elm.Main.init({ node: document.getElementById('app') });
+        </script>
+    </body>
+    <script>
+        console.log(`
+               _____                                     _______             .___
+              /  _  \\_______  _____   ___________ ___.__.\\      \\   ____   __| _/____
+             /  /_\\  \\_  __ \\/     \\ /  _ \\_  __ <   |  |/   |   \\ /  _ \\ / __ |/ __ \\
+            /    |    \\  | \\/  Y Y  (  <_> )  | \\/\\___  /    |    (  <_> ) /_/ \\  ___/
+            \\____|__  /__|  |__|_|  /\\____/|__|   / ____\\____|__  /\\____/\\____ |\\___  >
+                    \\/            \\/              \\/            \\/            \\/    \\/
+
+            \t\t© ${new Date().getFullYear()} ArmoryNode - All rights reserved
+        `);
+    </script>
+</html>

@@ -1,0 +1,260 @@
+$border-radius: 10px;
+$link-height: 60px;
+$link-gap-height: 20px;
+$link-count: 4;
+
+// In seconds
+$profile-animation-duration: 1;
+
+$link-list-animation-delay: $profile-animation-duration;
+
+// Should be the middle of the page
+$link-container-height: calc(($link-height + $link-gap-height) * $link-count / 2);
+
+@font-face {
+    font-family: "Poppins";
+    src:
+        url("/fonts/Poppins/Poppins-Light.ttf"),
+        url("/fonts/Poppins/Poppins-Regular.ttf"),
+        url("/fonts/Poppins/Poppins-Medium.ttf"),
+        url("/fonts/Poppins/Poppins-Bold.ttf");
+}
+
+@mixin transition-for($property) {
+    transition-duration: .25s;
+    transition-timing-function: ease;
+    transition-property: $property;
+}
+
+@mixin add-shadow {
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+}
+
+$color-list: ('green','red','blue','grey');
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+}
+
+#wrapper {
+    position: relative;
+    font-family: "Poppins";
+    margin: 0;
+    padding: 0;
+    background-color: var(--background-color);
+    color: var(--text-color);
+    width: 100vw;
+    height: 100vh;
+
+    // Initialize body to light theme
+    --background-color: #FDF7F1;
+    --foreground-color: #333333;
+    --text-color: var(--foreground-color);
+    --icon-color: var(--background-color);
+    --toggle-icon: '\f186';
+    --toggle-color: var(--foreground-color);
+    --toggle-icon-color: var(--background-color);
+    --border-color: var(--foreground-color);
+    --border-width: 3px;
+    --footer-color: #000000;
+
+    --green: #80CEB9;
+    --red: #F9AEC0;
+    --blue: #8BCDDA;
+    --grey: #BFC2C5;
+
+    &.dark {
+        --background-color: #161616;
+        --foreground-color: #343434;
+        --text-color: var(--foreground-color);
+        --icon-color: #FDF7F1;
+        --toggle-icon: '\e0c9';
+        --toggle-color: #FFFFFF;
+        --toggle-icon-color: var(--text-color);
+        --border-color: #2F2F2F;
+        --border-width: 3px;
+        --footer-color: #FFFFFF;
+
+    }
+
+    @each $color in $color-list {
+        .bg-#{$color} {
+            background-color: var(--#{$color});
+        }
+    }
+
+    #themeToggle {
+        position: fixed;
+        display: flex;
+        color: var(--toggle-icon-color);
+        background-color: var(--toggle-color);
+        top: 30px;
+        right: 30px;
+        width: 45px;
+        height: 45px;
+        border-radius: 50%;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+
+        #themeToggleIcon {
+            --icon-size: 26px;
+            height: var(--icon-size);
+
+            &::before {
+                content: var(--toggle-icon);
+                font: var(--fa-font-solid);
+                font-size: var(--icon-size);
+                line-height: var(--icon-size);
+                width: var(--icon-size);
+            }
+        }
+
+    }
+
+    main {
+        display: flex;
+        flex-flow: column nowrap;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+
+        #profile {
+            display: flex;
+            flex-flow: column nowrap;
+            align-items: center;
+            margin-block-end: 25px;
+
+            >.profile-image {
+                width: 100px;
+                height: 100px;
+                background-image: url("/images/profile.png");
+                background-position: 50% 50%;
+                background-size: 100px 100px;
+                background-repeat: no-repeat;
+                border-radius: 50%;
+                border: var(--border-width) solid var(--border-color);
+                cursor: pointer;
+                @include transition-for(transform);
+
+                &:hover {
+                    transform: rotate(-10deg) scale(1.2);
+                }
+            }
+        }
+
+        nav {
+            display: flex;
+            justify-content: center;
+            flex-flow: column nowrap;
+            row-gap: 20px;
+            counter-reset: link;
+
+            .nav-link-wrapper {
+                position: relative;
+
+                &:hover {
+                    .nav-link {
+                        transform: translateY(-15px);
+                        -webkit-transform: translateY(-15px);
+                        -moz-transform: translateY(-15px);
+                    }
+                }
+
+                .nav-link {
+                    display: flex;
+                    align-items: center;
+                    width: 320px;
+                    height: 80px;
+                    border: var(--border-width) solid var(--border-color);
+                    border-radius: $border-radius;
+                    color: var(--text-color);
+                    text-decoration: none;
+                    opacity: 0;
+                    animation: fade-up;
+                    animation-duration: .5s;
+                    animation-fill-mode: forwards;
+                    animation-timing-function: ease-in-out;
+                    @include transition-for(transform);
+
+                    .icon-container {
+                        display: flex;
+                        align-items: center;
+                        padding: 10px;
+                        height: 100%;
+                        color: var(--icon-color);
+                        background-color: var(--foreground-color);
+
+                        // Fixes some visual artifacts with the dark theme
+                        border-top-left-radius: $border-radius - 4;
+                        border-bottom-left-radius: $border-radius - 4;
+                    }
+
+                    .link-body {
+                        font-size: larger;
+                        font-weight: bold;
+                        color: var(--text-color);
+                        margin-inline: 1em;
+                    }
+
+                    .link-icon {
+                        align-self: center;
+                        color: var(--text-color);
+                        margin-inline-start: auto;
+                        margin-inline-end: 15px;
+                    }
+
+                    &::after {
+                        content: '';
+                        position: absolute;
+                        left: 0;
+                        top: 0;
+                        width: 100%;
+                        height: 100%;
+                        // box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px;
+                        opacity: 0;
+                        @include transition-for(opacity);
+                    }
+
+                    &:hover::after {
+                        opacity: 1;
+                    }
+                }
+            }
+
+            @for $index from 1 through $link-count {
+                .nav-link-wrapper:nth-of-type(#{$index}) {
+                    .nav-link {
+                        animation-delay: #{$index * .07}s;
+                    }
+                }
+            }
+        }
+    }
+
+    footer {
+        --width: 160px;
+        position: absolute;
+        bottom: -1.5em;
+        left: calc(calc(100vw / 2) - calc(var(--width) / 2));
+        width: var(--width);
+        color: var(--footer-color);
+    }
+}
+
+@keyframes fade-up {
+    from {
+        transform: translateY(50px);
+    }
+
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
