@@ -23,7 +23,7 @@ Since this is my personal website, I don't really expect anyone to want to run i
 ### Building
 1. Clone the repository
 ```bash
-git clone https://github.com/yourusername/ArmoryNodeWebsite.git
+git clone https://github.com/armorynode/ArmoryNodeWebsite.git
 cd ArmoryNodeWebsite
 ```
 
