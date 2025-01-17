@@ -1,56 +1,71 @@
 port module Main exposing (main)
 
 import Browser
-import Html exposing (Html, a, div, i, main_, nav, span)
+import Html exposing (Html, a, button, div, footer, i, main_, nav, span)
 import Html.Attributes exposing (attribute, class, href, id)
 import Html.Events exposing (onClick)
 
-main : Program () Model Msg
+
+main : Program Flags Model Msg
 main =
     Browser.element
         { init = initModel
         , view = view
         , update = update
-        , subscriptions = subscriptions
+        , subscriptions = \_ -> Sub.none
         }
 
 
-port darkModeSettingReceived : (Bool -> msg) -> Sub msg 
-port setDarkModeStorage : Bool -> Cmd msg
+port sendDarkModeSetting : Bool -> Cmd msg
+port replayAnimations : () -> Cmd msg
 
 
-initModel : () -> (Model, Cmd Msg)
-initModel _ =
-    ( { darkMode = False }, Cmd.none )
+initModel : Flags -> ( Model, Cmd Msg )
+initModel flags =
+    ( { darkMode = flags.darkModeEnabled, year = flags.currentYear }, Cmd.none )
 
 
 type Msg
     = ToggleDarkMode
-    | DarkModeSettingReceived Bool
+    | ReplayAnimations
+
+
+type alias Flags =
+    { currentYear : Int
+    , darkModeEnabled : Bool
+    }
 
 
 type alias Model =
-    { darkMode : Bool }
+    { darkMode : Bool
+    , year : Int
+    }
 
 
-update : Msg -> Model -> (Model, Cmd Msg)
+update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
         ToggleDarkMode ->
             let
-                darkModeEnabled = not model.darkMode
+                darkModeEnabled =
+                    not model.darkMode
             in
-            ( { model | darkMode = darkModeEnabled }, setDarkModeStorage darkModeEnabled )
-        DarkModeSettingReceived darkMode ->
-            ( { model | darkMode = darkMode }, Cmd.none )
+            ( { model | darkMode = darkModeEnabled }, sendDarkModeSetting darkModeEnabled )
+        ReplayAnimations ->
+            ( model, replayAnimations () )
 
 
-navLink : String -> String -> String -> String -> Html msg
+icon : String -> Html Msg
+icon class_ =
+    i [ class class_, attribute "aria-hidden" "true" ] []
+
+
+navLink : String -> String -> String -> String -> Html Msg
 navLink bgColor link iconClass linkText =
     div [ class "nav-link-wrapper" ]
         [ a [ class ("nav-link " ++ bgColor), href link ]
             [ div [ class "icon-container" ]
-                [ i [ class iconClass, attribute "aria-hidden" "true" ] [] ]
+                [ icon iconClass ]
             , div [ class "link-body" ] [ Html.text linkText ]
             , div [ class "link-icon" ] []
             ]
@@ -59,16 +74,17 @@ navLink bgColor link iconClass linkText =
 
 themeToggle : Html Msg
 themeToggle =
-    div [ id "themeToggle", onClick ToggleDarkMode ]
+    button [ id "themeToggle", onClick ToggleDarkMode ]
         [ span [ id "themeToggleIcon", attribute "aria-hidden" "true" ] [] ]
 
 
-profile : Html msg
+profile : Html Msg
 profile =
-    div [ id "profile" ] [ div [ class "profile-image" ] [] ]
+    div [ id "profile", onClick ReplayAnimations ]
+        [ div [ class "profile-image" ] [] ]
 
 
-navItems : Html msg
+navItems : Html Msg
 navItems =
     nav []
         [ navLink "bg-green" "https://www.instagram.com/armorynode/" "fa-brands fa-fw fa-instagram fa-2x" "Instagram"
@@ -78,17 +94,32 @@ navItems =
         ]
 
 
-subscriptions : Model -> Sub Msg
-subscriptions _ =
-    darkModeSettingReceived DarkModeSettingReceived
+siteFooter : Model -> Html Msg
+siteFooter model =
+    footer [ id "footer" ]
+        [ div [ class "footer-content" ]
+            [ div [ class "footer-text" ]
+                [ Html.text ("© " ++ String.fromInt model.year ++ " ArmoryNode") ]
+            ]
+        ]
 
 
 view : Model -> Html Msg
 view model =
-    div [ id "wrapper", class (if model.darkMode then "dark" else "") ]
+    div
+        [ id "wrapper"
+        , class
+            (if model.darkMode then
+                "dark"
+
+             else
+                ""
+            )
+        ]
         [ themeToggle
         , main_ []
             [ profile
             , navItems
             ]
+        , siteFooter model
         ]

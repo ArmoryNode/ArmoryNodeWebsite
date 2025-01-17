@@ -13,18 +13,31 @@
     <body>
         <div id="app"></div>
         <script>
-            var app = Elm.Main.init({ node: document.getElementById('app') });
-
             const darkModeEnabledValue = localStorage.getItem('darkModeEnabled');
             const darkModeEnabled = darkModeEnabledValue === null 
                 ? window.matchMedia('(prefers-color-scheme: dark)').matches
                 : darkModeEnabledValue === 'true';
 
-            app.ports.darkModeSettingReceived.send(darkModeEnabled);
+            const app = Elm.Main.init({ 
+                node: document.getElementById('app'),
+                flags: {
+                    currentYear: new Date().getFullYear(),
+                    darkModeEnabled: darkModeEnabled
+                }
+            });
 
-            app.ports.setDarkModeStorage.subscribe(function(darkModeEnabled) {
+            app.ports.sendDarkModeSetting.subscribe(function(darkModeEnabled) {
                 localStorage.setItem('darkModeEnabled', JSON.stringify(darkModeEnabled));
             });
+
+            app.ports.replayAnimations.subscribe(function() {
+                document.querySelectorAll('.nav-link').forEach(element => {
+                    for (const animation of element.getAnimations()) {
+                        animation.cancel();
+                        animation.play();
+                    }
+                });
+            })
         </script>
     </body>
     <script>

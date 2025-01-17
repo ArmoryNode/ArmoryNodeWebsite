@@ -49,10 +49,8 @@ body {
     padding: 0;
     background-color: var(--background-color);
     color: var(--text-color);
-    width: 100vw;
-    height: 100vh;
 
-    // Initialize body to light theme
+    // Initialize to light theme
     --background-color: #FDF7F1;
     --foreground-color: #333333;
     --text-color: var(--foreground-color);
@@ -80,7 +78,6 @@ body {
         --border-color: #2F2F2F;
         --border-width: 3px;
         --footer-color: #FFFFFF;
-
     }
 
     @each $color in $color-list {
@@ -89,7 +86,7 @@ body {
         }
     }
 
-    #themeToggle {
+    button#themeToggle {
         position: fixed;
         display: flex;
         color: var(--toggle-icon-color);
@@ -102,6 +99,8 @@ body {
         align-items: center;
         justify-content: center;
         cursor: pointer;
+        outline: none;
+        border: none;
 
         #themeToggleIcon {
             --icon-size: 26px;
@@ -239,12 +238,13 @@ body {
     }
 
     footer {
-        --width: 160px;
+        display: flex;
         position: absolute;
         bottom: -1.5em;
-        left: calc(calc(100vw / 2) - calc(var(--width) / 2));
-        width: var(--width);
+        background-color: var(--background-color);
         color: var(--footer-color);
+        width: 100%;
+        place-content: center;
     }
 }
 
