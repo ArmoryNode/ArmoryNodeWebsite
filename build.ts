@@ -25,6 +25,7 @@ async function compileAndMinifyElm(retries: number = 0) {
                 compileAndMinifyElm(retries + 1);
             } else {
                 console.error("Failed to minify js after 3 retries");
+                console.error(error);
                 return;
             }
         } else {
@@ -48,6 +49,7 @@ async function compileSass(retries: number = 0) {
                 compileSass(retries + 1);
             } else {
                 console.error("Failed to compile Sass after 3 retries");
+                console.error(error);
                 return;
             }
         } else {
