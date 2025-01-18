@@ -5,6 +5,7 @@ on:
     branches:
       - main
   page_build:
+  workflow_dispatch:
 
 permissions:
   contents: read
