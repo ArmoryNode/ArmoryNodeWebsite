@@ -18,7 +18,7 @@ jobs:
           deno-version: v2.x
 
       - name: Set up Elm
-        uses: justgook/setup-elm@1.3.0
+        uses: jorelali/setup-elm@v6
         with:
           elm-version: 0.19.1
 
