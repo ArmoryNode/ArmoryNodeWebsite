@@ -40,7 +40,14 @@ jobs:
 
       - name: Build Project
         run: deno task build
+
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: static-files
+          path: static/
   deploy:
+    needs: build
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
@@ -48,11 +55,17 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+      - name: Download build artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: static-files
+          path: static/
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
+
+      - name: "List static directory contents"
+        run: ls -R static
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
