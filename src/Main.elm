@@ -1,8 +1,8 @@
 port module Main exposing (main)
 
 import Browser
-import Html exposing (Html, a, button, div, footer, i, main_, nav, span)
-import Html.Attributes exposing (attribute, class, href, id)
+import Html exposing (Html, a, button, div, footer, i, main_, nav, span, img)
+import Html.Attributes exposing (attribute, class, href, id, src)
 import Html.Events exposing (onClick)
 
 
@@ -81,7 +81,7 @@ themeToggle =
 profile : Html Msg
 profile =
     div [ id "profile", onClick ReplayAnimations ]
-        [ div [ class "profile-image" ] [] ]
+        [ img [ src "./images/profile.png", class "profile-image" ] [] ]
 
 
 navItems : Html Msg
