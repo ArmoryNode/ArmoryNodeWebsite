@@ -44,6 +44,7 @@ async function compileSass() {
 // Only run if the script is run directly, not imported as a module
 if (import.meta.main) {
     await compile();
+    console.log("✅ Done!");
 }
 
 export async function compile() {
@@ -54,6 +55,4 @@ export async function compile() {
 
     console.log("🌳 Compiling Elm...");
     await compileAndMinifyElm();
-
-    console.log("✅ Done!");
 }
