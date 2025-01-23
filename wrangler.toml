@@ -1,0 +1,13 @@
+name = "armorynode"
+pages_build_output_dir = "static"
+compatibility_date = "2023-11-15"
+
+[vars]
+NODE_VERSION = "22.13.1"
+
+[env.production.vars]
+NODE_VERSION = "22.13.1"
+
+[dev]
+ip = "localhost"
+port = 8787

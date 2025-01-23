@@ -10,6 +10,7 @@ This repository contains the source code for my website. It's currently very min
 [![Deno](https://img.shields.io/badge/Deno-000000?style=for-the-badge&logo=deno&logoColor=white)](https://deno.com/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
 [![Sass](https://img.shields.io/badge/Sass-CC6699?style=for-the-badge&logo=sass&logoColor=white)](https://sass-lang.com/)
+[![Cloudflare Pages](https://img.shields.io/badge/Cloudflare%20Pages-F38020?style=for-the-badge&logo=cloudflarepages&logoColor=white)](https://pages.cloudflare.com/)
 
 ## 👷‍♂️ Getting Started
 Since this is my personal website, I don't really expect anyone to want to run it locally, but if you do, these are the steps you'll need to take.
@@ -18,7 +19,7 @@ Since this is my personal website, I don't really expect anyone to want to run i
 
 - Elm (https://elm-lang.org/)
 - Deno (https://deno.com/)
-- Dart Sass (https://sass-lang.com/dart-sass/)
+- Wrangler (https://developers.cloudflare.com/workers/wrangler/install-and-update/)
 
 ### Building
 1. Clone the repository
@@ -30,16 +31,16 @@ cd ArmoryNodeWebsite
 2. Build and run the project
 ```bash
 # Use this command to build and run the project
-deno task run
+wrangler pages dev
 
 # Use this command if you only wish to generate the javascript and css
 # (e.g. using your own web server)
 deno task build
 ```
 
-The website should now be running at `http://localhost:8000`
+The website should now be running at `http://localhost:8787`
 <br>
-*Note: If the port is in use, change the `port` variable in `server.ts` to any other open port.*
+*Note: If the port is in use, change the `port` setting in `wrangler.toml` under `[dev]` to any other open port.*
 
 ## 🪪 License
 > Licensed under the Apache License, Version 2.0 (the "License");
