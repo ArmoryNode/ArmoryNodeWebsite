@@ -9,3 +9,5 @@ static/css/*.min.css
 node_modules/
 # Wrangler
 .wrangler/
+# published artifacts
+dist/
