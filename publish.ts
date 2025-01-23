@@ -12,6 +12,9 @@ async function publish() {
     await fs.copy("./functions", "./dist/functions", { overwrite: true });
     await fs.copy("./wrangler.toml", "./dist/wrangler.toml", { overwrite: true });
 
+    // Move _headers to the root of dist
+    await fs.move("./dist/static/_headers", "./dist/_headers");
+
     console.log("✅ Publish complete!");
 }
 
