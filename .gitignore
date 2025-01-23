@@ -5,3 +5,7 @@ repl-temp-*
 # generated css and js
 static/js/*.min.js
 static/css/*.min.css
+# Node modules
+node_modules/
+# Wrangler
+.wrangler/
