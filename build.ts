@@ -50,6 +50,11 @@ async function compileSass(retries: number = 0) {
     }
 }
 
+// Only run if the script is run directly, not imported as a module
+if (import.meta.main) {
+    await compile();
+}
+
 export async function compile() {
     try {
         console.log("🎨 Compiling Sass...");
