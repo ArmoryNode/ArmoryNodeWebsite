@@ -4,18 +4,11 @@ on:
   push:
     branches:
       - main
-  page_build:
   workflow_dispatch:
-
-permissions:
-  contents: read
-  pages: write
-  id-token: write
 
 jobs:
   build:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -28,7 +21,7 @@ jobs:
       - name: Set up Elm
         uses: jorelali/setup-elm@v6
         with:
-            elm-version: 0.19.1
+          elm-version: 0.19.1
 
       - name: Cache Deno modules
         uses: actions/cache@v4
@@ -48,9 +41,10 @@ jobs:
           path: static/
   deploy:
     needs: build
-
     runs-on: ubuntu-latest
-
+    permissions:
+      contents: read
+      deployments: write
     steps:
       - name: Download build artifacts
         uses: actions/download-artifact@v4
@@ -62,11 +56,8 @@ jobs:
         run: ls -R static
 
       - name: Deploy to Cloudflare pages
-        uses: cloudflare/pages-action@1
+        uses: cloudflare/wrangler-action@v3
         with:
-            apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-            accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-            projectName: armorynodewebsite
-            directory: static
-            gitHubToken: ${{ secrets.GITHUB_TOKEN }}
-
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: pages deploy static --project-name=armorynodewebsite
