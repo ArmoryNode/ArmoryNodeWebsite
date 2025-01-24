@@ -9,7 +9,6 @@ async function publish() {
     console.log("🚀 Publishing files to `dist/`...");
     await Deno.mkdir("./dist", { recursive: true });
     await fs.copy("./static", "./dist/static", { overwrite: true });
-    await fs.copy("./functions", "./dist/functions", { overwrite: true });
     await fs.copy("./wrangler.toml", "./dist/wrangler.toml", { overwrite: true });
 
     // Move _headers to the root of dist

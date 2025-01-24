@@ -31,7 +31,7 @@ cd ArmoryNodeWebsite
 2. Build and run the project
 ```bash
 # Use this command to build and run the project
-wrangler pages dev
+deno task run
 
 # Use this command if you only wish to generate the javascript and css
 # (e.g. using your own web server)

@@ -6,7 +6,7 @@ async function runTasks() {
         await compile();
 
         // Run wrangler
-        console.log("\n🤠 Running Wrangler...");
+        console.log("🤠 Running Wrangler...");
         const wranglerStep = new Deno.Command("npx", {
             args: ["wrangler", "pages", "dev"],
             stdout: "inherit",
