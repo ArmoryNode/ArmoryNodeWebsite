@@ -3,8 +3,8 @@ elm-stuff
 # elm-repl generated files
 repl-temp-*
 # generated css and js
-static/js/*.min.js
-static/css/*.min.css
+static/js/*
+static/css/*
 # Node modules
 node_modules/
 # Wrangler

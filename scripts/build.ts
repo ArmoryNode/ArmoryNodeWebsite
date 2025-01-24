@@ -18,7 +18,7 @@ async function createDirectories() {
 async function compileAndMinifyElm() {
     try {
         const compiledJs = await ElmCompile("./src/Main.elm", { mode: "optimize" });
-        const minifiedJs = await minify(compiledJs);
+        const minifiedJs = await minify(compiledJs, { ecma: 2016 });
         await Deno.writeTextFile("./static/js/main.min.js", minifiedJs.code ?? "");
     } catch (error) {
         if (error instanceof Deno.errors.NotFound) {
@@ -44,7 +44,7 @@ async function compileSass() {
 // Only run if the script is run directly, not imported as a module
 if (import.meta.main) {
     await compile();
-    console.log("✅ Done!");
+    console.log("✅ Build complete!");
 }
 
 export async function compile() {
