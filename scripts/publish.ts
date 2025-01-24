@@ -1,7 +1,7 @@
 import * as fs from "jsr:@std/fs";
 import { compile } from "./build.ts";
 
-async function deleteExistingDist() {
+export async function removePublishDirectory() {
     try {
         await Deno.remove("./dist", { recursive: true });
     } catch (error) {
@@ -17,12 +17,10 @@ export async function publish() {
 
     console.log("🚀 Publishing files to `dist/`...");
 
-    await deleteExistingDist();
-    await fs.copy("./static", "./dist/static", { overwrite: true });
-    await fs.copy("./wrangler.toml", "./dist/wrangler.toml", { overwrite: true });
+    await removePublishDirectory();
+    await fs.copy("./static", "./dist/");
+    await fs.copy("./wrangler.toml", "./dist/wrangler.toml");
     await fs.copy("./_headers", "./dist/_headers");
-
-    
 }
 
 // Only run if the script is run directly, not imported as a module

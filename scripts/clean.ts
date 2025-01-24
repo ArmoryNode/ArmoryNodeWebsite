@@ -1,3 +1,5 @@
+import { removePublishDirectory } from "./publish.ts";
+
 async function cleanDirectories(directories: string[]) {
   try {
     for (const dir of directories) {
@@ -13,23 +15,11 @@ async function cleanDirectories(directories: string[]) {
   }
 }
 
-async function removeDirectories(directories: string[]) {
-  try {
-    for (const dir of directories) {
-      await Deno.remove(dir, { recursive: true });
-    }
-  } catch (error) {
-    if (!(error instanceof Deno.errors.NotFound)) {
-      throw error;
-    }
-  }
-}
-
 export async function clean() {
   console.log("🧹 Cleaning generated files...");
 
   await cleanDirectories(["css", "js"]);
-  await removeDirectories(["dist"]);
+  await removePublishDirectory();
 }
 
 // Only run if the script is run directly, not imported as a module
