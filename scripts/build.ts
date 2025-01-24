@@ -41,12 +41,6 @@ async function compileSass() {
     });
 }
 
-// Only run if the script is run directly, not imported as a module
-if (import.meta.main) {
-    await compile();
-    console.log("✅ Build complete!");
-}
-
 export async function compile() {
     await createDirectories();
 
@@ -55,4 +49,11 @@ export async function compile() {
 
     console.log("🌳 Compiling Elm...");
     await compileAndMinifyElm();
+}
+
+
+// Only run if the script is run directly, not imported as a module
+if (import.meta.main) {
+    await compile();
+    console.log("✅ Build complete!");
 }
