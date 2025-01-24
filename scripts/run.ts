@@ -24,4 +24,5 @@ async function runTasks() {
     }
 }
 
+// This one should be run directly
 await runTasks();

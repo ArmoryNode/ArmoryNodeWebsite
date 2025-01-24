@@ -11,7 +11,7 @@ async function deleteExistingDist() {
 }
 
 /// Builds and publishes necessary files to `dist/` for deployment.
-async function publish() {
+export async function publish() {
     console.log("🏗️  Running build step...");
     await compile();
 
@@ -22,7 +22,11 @@ async function publish() {
     await fs.copy("./wrangler.toml", "./dist/wrangler.toml", { overwrite: true });
     await fs.copy("./_headers", "./dist/_headers");
 
-    console.log("✅ Publish complete!");
+    
 }
 
-await publish();
+// Only run if the script is run directly, not imported as a module
+if (import.meta.main) {
+    await publish();
+    console.log("✅ Publish complete!");
+}
