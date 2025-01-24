@@ -7,3 +7,9 @@
 
 https://armorylinks.pages.dev/*
   X-Robots-Tag: noindex
+
+/static/js/*
+    Content-Type: application/javascript
+
+/static/css/*
+    Content-Type: text/css
