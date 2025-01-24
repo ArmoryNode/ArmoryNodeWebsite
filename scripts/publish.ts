@@ -20,7 +20,6 @@ export async function publish() {
     await removePublishDirectory();
     await fs.copy("./static", "./dist/");
     await fs.copy("./wrangler.toml", "./dist/wrangler.toml");
-    await fs.copy("./_headers", "./dist/_headers");
 }
 
 // Only run if the script is run directly, not imported as a module
