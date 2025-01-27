@@ -7,9 +7,9 @@ This repository contains the source code for my website. It's currently very min
 
 ## 🛠️ Technology Used
 [![Elm](https://img.shields.io/badge/Elm-60B5CC?style=for-the-badge&logo=elm&logoColor=white)](https://elm-lang.org/)
-[![Deno](https://img.shields.io/badge/Deno-000000?style=for-the-badge&logo=deno&logoColor=white)](https://deno.com/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
-[![Sass](https://img.shields.io/badge/Sass-CC6699?style=for-the-badge&logo=sass&logoColor=white)](https://sass-lang.com/)
+[![Sass](https://img.shields.io/badge/Sass-CC6699?style=for-the-badge&logo=sass&logoColor=white)](https://sass-lang.com/)<br>
+[![Deno](https://img.shields.io/badge/Deno-000000?style=for-the-badge&logo=deno&logoColor=white)](https://deno.com/)
 [![Cloudflare Pages](https://img.shields.io/badge/Cloudflare%20Pages-F38020?style=for-the-badge&logo=cloudflarepages&logoColor=white)](https://pages.cloudflare.com/)
 
 ## 👷‍♂️ Getting Started
@@ -19,7 +19,7 @@ Since this is my personal website, I don't really expect anyone to want to run i
 
 - Elm (https://elm-lang.org/)
 - Deno (https://deno.com/)
-- Wrangler (https://developers.cloudflare.com/workers/wrangler/install-and-update/)
+- Node.js (https://nodejs.org/en) (This is only required until [this bug is fixed](https://github.com/denoland/deno/issues/26349))
 
 ### Building
 1. Clone the repository
@@ -33,9 +33,11 @@ cd ArmoryNodeWebsite
 # Use this command to build and run the project
 deno task run
 
-# Use this command if you only wish to generate the javascript and css
-# (e.g. using your own web server)
-deno task build
+# On first run it will ask you to install wrangler (if you don't already have it).
+# Just hit enter to continue, this will only need to be done once.
+Need to install the following packages:
+wrangler@x.x.x
+Ok to proceed? (y)
 ```
 
 The website should now be running at `http://localhost:8787`
