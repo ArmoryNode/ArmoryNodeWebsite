@@ -1,5 +1,8 @@
 import { removePublishDirectory } from "./publish.ts";
 
+/**
+ * Removes all files in the specified directories.
+ */
 async function cleanDirectories(directories: string[]) {
   try {
     for (const dir of directories) {
@@ -9,12 +12,14 @@ async function cleanDirectories(directories: string[]) {
       }
     }
   } catch (error) {
-    if (!(error instanceof Deno.errors.NotFound)) {
+    if (!(error instanceof Deno.errors.NotFound))
       throw error;
-    }
   }
 }
 
+/**
+ * Cleans all generated files and removes the publish (dist) directory.
+ */
 export async function clean() {
   console.log("🧹 Cleaning generated files...");
 

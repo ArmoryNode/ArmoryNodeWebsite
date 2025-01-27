@@ -1,9 +1,12 @@
-import { compile } from "./build.ts";
+import { compileAll } from "./build.ts";
 
+/** 
+ * Compiles all assets and starts the wrangler dev server.
+ */
 async function runTasks() {
     try {
         // Compile SASS and Elm files
-        await compile();
+        await compileAll();
 
         // Run wrangler
         console.log("🤠 Running Wrangler...");
